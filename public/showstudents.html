@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students Details</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Department</th>
+            <th>ID No</th>
+            <th>Date of Birth</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Permanent Address</th>
+          </tr>
+        </thead>
+
+        <tbody id="st_info"></tbody>
+      </table>
+    </div>
+
+    <script>
+      fetch("http://localhost:3000/getStudents")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          console.log(Array.isArray(data));
+          const tableBody = document.getElementById("st_info");
+          data.forEach((student) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+
+         <td>${student.firstName}</td>
+        <td>${student.lastName}</td>
+        <td>${student.department}</td>
+        <td>${student.studentId}</td>
+        <td>${student.dateOfBirth}</td>
+        <td>${student.mobile}</td>
+        <td>${student.email}</td>
+        <td>${student.permanentAddress}</td>
+                `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error fetching students:", error));
+    </script>
+  </body>
+</html>
